@@ -13,6 +13,7 @@ import java.util.Stack;
 public class Maintenance extends JFrame {
 
     private JRadioButton pre;
+    private JRadioButton post;
     private JLabel operation;
     private JLabel expression;
     private JLabel result;
@@ -21,14 +22,17 @@ public class Maintenance extends JFrame {
     private JButton button;
 
     public Maintenance() {
-        super("Pre-fix Evaluation");
+        super("Pre-fix /Post-fix Evaluation");
         setLayout(new FlowLayout());
         operation = new JLabel("What expression do you want to evaluate?");
         add(operation);
         pre = new JRadioButton("Pre-fix", true);
+        post = new JRadioButton("Post-fix", false);
         add(pre);
+        add(post);
         radioGroup = new ButtonGroup();
         radioGroup.add(pre);
+        radioGroup.add(post);
         expression = new JLabel("Enter the expression you want to evaluate");
         add(expression);
         text = new JTextField("", 20);
@@ -100,6 +104,43 @@ public class Maintenance extends JFrame {
                 return "Error";
             }
             return stack.pop().toString();
+        }
+        
+         public String evalutePost(String exp) {
+             
+            Stack<Double> Stack = new Stack<>();
+            
+            for (int i = 0; i < exp.length(); i++) {
+                
+                if (exp.charAt(i) == ' ') {
+                    continue;
+                } else if (Character.isDigit(exp.charAt(i))) {
+                    
+                    String op = "" + exp.charAt(i);
+                    Stack.push(Double.parseDouble(op));
+                } else {
+                   
+                 
+                        double val1 = Stack.pop();
+                        double val2 = Stack.pop();
+                        switch (exp.charAt(i)) {
+                            case '+':
+                                Stack.push(val2 + val1);
+                                break;
+                            case '-':
+                                Stack.push(val2 - val1);
+                                break;
+                            case '*':
+                                Stack.push(val2 * val1);
+                                break;
+                            case '/':
+                                Stack.push(val2 / val1);
+                                break;
+                        }
+                    } 
+            }
+             return Stack.pop().toString();
+           
         }
     }
 
