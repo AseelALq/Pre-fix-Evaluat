@@ -1,4 +1,4 @@
-import java.awt.Color;
+/*import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,6 +8,23 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
+import java.util.Stack;*/
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
 import java.util.Stack;
 
 public class Maintenance extends JFrame {
@@ -23,9 +40,19 @@ public class Maintenance extends JFrame {
 
     public Maintenance() {
         super("Pre-fix /Post-fix Evaluation");
-        setLayout(new FlowLayout());
-        operation = new JLabel("What expression do you want to evaluate?");
+        
+         setLayout(new GridLayout(0, 1, 10, 10));
+        setFont(new Font("Arial", Font.PLAIN, 16));
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        operation = new JLabel("Select expression type:");
+        operation.setHorizontalAlignment(SwingConstants.CENTER);
         add(operation);
+
+        JPanel radioPanel = new JPanel();
+        radioPanel.setLayout(new GridLayout(1, 2, 10, 10));
+        radioPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+       
         pre = new JRadioButton("Pre-fix", true);
         post = new JRadioButton("Post-fix", false);
         add(pre);
@@ -37,13 +64,21 @@ public class Maintenance extends JFrame {
         add(expression);
         text = new JTextField("", 20);
         add(text);
+        
         button = new JButton("Evaluate");
-        buttonHandler handler = new buttonHandler();
-        button.addActionListener(handler);
+        button.setFont(new Font("Arial", Font.BOLD, 16));
+        button.addActionListener(new buttonHandler());
         add(button);
+
         result = new JLabel();
+        result.setHorizontalAlignment(SwingConstants.CENTER);
+        result.setBorder(new EmptyBorder(10, 0, 0, 0));
         result.setVisible(false);
         add(result);
+
+        pack();
+        
+      
     }
 
     private class buttonHandler implements ActionListener {
