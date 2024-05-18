@@ -44,15 +44,23 @@ public class Maintenance extends JFrame {
 
     private class buttonHandler implements ActionListener {
 
-        public void actionPerformed(ActionEvent e) {
+       public void actionPerformed(ActionEvent e) {
             if (!text.getText().isEmpty()) {
-                String r = evaluatePrefix(text.getText());
-                if (r.equals("Error")) {
-                    result.setText("Error! The entered expression is not valid");
-                    result.setForeground(Color.RED);
-                } else {
+                 
+  
+               try {
+                    String r = evaluatePrefix(text.getText());
                     result.setText("The result of the entered expression is: " + r);
                     result.setForeground(Color.BLUE);
+                } catch (NumberFormatException ex) {
+                    result.setText("Error! Invalid number format in the expression");
+                    result.setForeground(Color.RED);
+                } catch (ArithmeticException ex) {
+                    result.setText("Error! Division by zero");
+                    result.setForeground(Color.RED);
+                } catch (Exception ex) {
+                    result.setText("Error! An unexpected error occurred");
+                    result.setForeground(Color.RED);
                 }
                 result.setVisible(true);
             }
